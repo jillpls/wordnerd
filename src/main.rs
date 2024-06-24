@@ -46,8 +46,8 @@ fn from_wortliste<P : AsRef<Path>>(path: P) -> Vec<SimpleWord> {
 
 fn main() {
 
-    // let words = from_wortliste("data/german/german.dic");
-    let words = from_wiktionary();
+    let words = from_wortliste("data/wortliste.txt");
+    // let words = from_wiktionary();
 
     get_and_print_result(
         &words,
@@ -83,17 +83,14 @@ fn get_and_print_result<F: Fn(&[char]) -> bool>(
         .collect::<Vec<&SimpleWord>>();
     result.sort_by(|a, b| b.word.len().cmp(&a.word.len()));
     result.dedup();
-    thread::sleep(Duration::from_millis(200));
     println!("\n\n{}", text);
-    thread::sleep(Duration::from_millis(200));
     println!("Ergebnisse: {}", result.len());
         let mut r = result[0..10]
             .iter()
             .enumerate()
             .map(|(i, x)| format!("{}: {} ({})", i + 1, x.word, x.word.len())).collect::<Vec<_>>();
-    r[0] = String::from("1. ???");
+    // r[0] = String::from("1. ???");
     for r in r {
-        thread::sleep(Duration::from_millis(rand::thread_rng().gen_range(0..250)));
         println!("{}", r);
     }
 }
